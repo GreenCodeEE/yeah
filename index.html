@@ -35,13 +35,13 @@ axios.post(direccionVerifica, dataVerifica, {
     }).then( respuestaVerifica  => {
         
         if (respuestaVerifica.data.isIdentical == true){
-            //rsepuesta = "si";
-            //window.document.title = rsepuesta;
+            rsepuesta = "si";
+            window.document.title = rsepuesta;
             //console.log("Eres la misma misma persona, puedes pasar");
             return true;
         }else{
-            //rsepuesta = "No";
-            //window.document.title = rsepuesta;
+            rsepuesta = "No";
+            window.document.title = rsepuesta;
             //console.log("No eres la misma misma persona, no puedes pasar");
             return false;
         }
@@ -49,11 +49,13 @@ axios.post(direccionVerifica, dataVerifica, {
     })
     .catch( error => {console.log(error)});
 };
-if (peticion(verifica) == true){
+peticion(verifica);
+
+/*if (peticion(verifica) == true){
 window.document.title = "si";
 }else{
 window.document.title = "no";
-};
+};*/
         </script>
     </body>
 </html>   
