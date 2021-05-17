@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang ="es-MX">
+    <body> 
+               <script>
+            const axios = require('axios');
+var datosEmpleados = [{nombre: "Luis", clave: 2525, foto: "c29ed886-729f-4391-b278-8ccf26eac790" }];
+var dataDetecta = eval('[' + window.AppInventor.getWebViewString() + ']');
+var rsepuesta;
+//Dirección de la petición (end point, punto de enlace)
+var direccionDetecta = 'https://servicioface.cognitiveservices.azure.com//face/v1.0/detect?returnFaceID=true&returnFaceLandmarks=false&returnFaceAttributes=age,gender&faceIdTimeToLive=86400&language=es';
+var direccionVerifica = 'https://servicioface.cognitiveservices.azure.com/face/v1.0/verify?=';
+
+
+function peticion(callback){
+    axios.post(direccionDetecta, dataDetecta, {
+        headers: { 'Ocp-Apim-Subscription-Key': '326d364a0fbe4a39998455172d1a3b46',
+                    'Content-type': 'application/json'}
+        }).then( respuestaDetecta  => {
+            callback( respuestaDetecta.data[0].faceId);
+        })
+        .catch( error => console.log(error));     
+        
+}
+//datosEmpleados[0].foto = peticion(verifica);
+
+function verifica( datosCredencial ){
+//petición POST
+var dataVerifica = {
+    faceId1: datosEmpleados[0].foto,
+    faceId2: datosCredencial
+}
+axios.post(direccionVerifica, dataVerifica, {
+    headers: { 'Ocp-Apim-Subscription-Key': '326d364a0fbe4a39998455172d1a3b46',
+                'Content-type': 'application/json'}
+    }).then( respuestaVerifica  => {
+        
+        if (respuestaVerifica.data.isIdentical == true){
+            rsepuesta = "si";
+            //console.log("Eres la misma misma persona, puedes pasar");
+        }else{
+            rsepuesta = "No";
+            //console.log("No eres la misma misma persona, no puedes pasar");
+        }
+            window.document.title = rsepuesta;
+    })
+    .catch( error => {console.log(error)});
+};
+peticion(verifica);
+        </script>
+    </body>
+</html>   
