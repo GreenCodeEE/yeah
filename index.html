@@ -50,7 +50,7 @@ axios.post(direccionVerifica, dataVerifica, {
     .catch( error => {console.log(error)});
 };
 peticion(verifica);
-
+window.document.title = rsepuesta;
 /*if (peticion(verifica) == true){
 window.document.title = "si";
 }else{
